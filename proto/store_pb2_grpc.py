@@ -51,13 +51,43 @@ class KeyValueStoreStub(object):
                 _registered_method=True)
         self.slowDown = channel.unary_unary(
                 '/distributedstore.KeyValueStore/slowDown',
-                request_serializer=proto_dot_store__pb2.SlowDownRequest.SerializeToString,
+                request_serializer=proto_dot_store__pb2.SlowdownRequest.SerializeToString,
                 response_deserializer=proto_dot_store__pb2.SlowDownResponse.FromString,
                 _registered_method=True)
         self.restore = channel.unary_unary(
                 '/distributedstore.KeyValueStore/restore',
                 request_serializer=proto_dot_store__pb2.RestoreRequest.SerializeToString,
                 response_deserializer=proto_dot_store__pb2.RestoreResponse.FromString,
+                _registered_method=True)
+        self.registerNode = channel.unary_unary(
+                '/distributedstore.KeyValueStore/registerNode',
+                request_serializer=proto_dot_store__pb2.NodeInfo.SerializeToString,
+                response_deserializer=proto_dot_store__pb2.Response.FromString,
+                _registered_method=True)
+        self.canCommit = channel.unary_unary(
+                '/distributedstore.KeyValueStore/canCommit',
+                request_serializer=proto_dot_store__pb2.CanCommitRequest.SerializeToString,
+                response_deserializer=proto_dot_store__pb2.Response.FromString,
+                _registered_method=True)
+        self.doCommit = channel.unary_unary(
+                '/distributedstore.KeyValueStore/doCommit',
+                request_serializer=proto_dot_store__pb2.DoCommitRequest.SerializeToString,
+                response_deserializer=proto_dot_store__pb2.Response.FromString,
+                _registered_method=True)
+        self.propagatePut = channel.unary_unary(
+                '/distributedstore.KeyValueStore/propagatePut',
+                request_serializer=proto_dot_store__pb2.PropagatePutRequest.SerializeToString,
+                response_deserializer=proto_dot_store__pb2.PropagatePutResponse.FromString,
+                _registered_method=True)
+        self.requestVote = channel.unary_unary(
+                '/distributedstore.KeyValueStore/requestVote',
+                request_serializer=proto_dot_store__pb2.VoteRequest.SerializeToString,
+                response_deserializer=proto_dot_store__pb2.VoteResponse.FromString,
+                _registered_method=True)
+        self.commitToNode = channel.unary_unary(
+                '/distributedstore.KeyValueStore/commitToNode',
+                request_serializer=proto_dot_store__pb2.CommitRequest.SerializeToString,
+                response_deserializer=proto_dot_store__pb2.CommitResponse.FromString,
                 _registered_method=True)
 
 
@@ -88,6 +118,42 @@ class KeyValueStoreServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def registerNode(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def canCommit(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def doCommit(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def propagatePut(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def requestVote(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def commitToNode(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_KeyValueStoreServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -103,13 +169,43 @@ def add_KeyValueStoreServicer_to_server(servicer, server):
             ),
             'slowDown': grpc.unary_unary_rpc_method_handler(
                     servicer.slowDown,
-                    request_deserializer=proto_dot_store__pb2.SlowDownRequest.FromString,
+                    request_deserializer=proto_dot_store__pb2.SlowdownRequest.FromString,
                     response_serializer=proto_dot_store__pb2.SlowDownResponse.SerializeToString,
             ),
             'restore': grpc.unary_unary_rpc_method_handler(
                     servicer.restore,
                     request_deserializer=proto_dot_store__pb2.RestoreRequest.FromString,
                     response_serializer=proto_dot_store__pb2.RestoreResponse.SerializeToString,
+            ),
+            'registerNode': grpc.unary_unary_rpc_method_handler(
+                    servicer.registerNode,
+                    request_deserializer=proto_dot_store__pb2.NodeInfo.FromString,
+                    response_serializer=proto_dot_store__pb2.Response.SerializeToString,
+            ),
+            'canCommit': grpc.unary_unary_rpc_method_handler(
+                    servicer.canCommit,
+                    request_deserializer=proto_dot_store__pb2.CanCommitRequest.FromString,
+                    response_serializer=proto_dot_store__pb2.Response.SerializeToString,
+            ),
+            'doCommit': grpc.unary_unary_rpc_method_handler(
+                    servicer.doCommit,
+                    request_deserializer=proto_dot_store__pb2.DoCommitRequest.FromString,
+                    response_serializer=proto_dot_store__pb2.Response.SerializeToString,
+            ),
+            'propagatePut': grpc.unary_unary_rpc_method_handler(
+                    servicer.propagatePut,
+                    request_deserializer=proto_dot_store__pb2.PropagatePutRequest.FromString,
+                    response_serializer=proto_dot_store__pb2.PropagatePutResponse.SerializeToString,
+            ),
+            'requestVote': grpc.unary_unary_rpc_method_handler(
+                    servicer.requestVote,
+                    request_deserializer=proto_dot_store__pb2.VoteRequest.FromString,
+                    response_serializer=proto_dot_store__pb2.VoteResponse.SerializeToString,
+            ),
+            'commitToNode': grpc.unary_unary_rpc_method_handler(
+                    servicer.commitToNode,
+                    request_deserializer=proto_dot_store__pb2.CommitRequest.FromString,
+                    response_serializer=proto_dot_store__pb2.CommitResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -190,7 +286,7 @@ class KeyValueStore(object):
             request,
             target,
             '/distributedstore.KeyValueStore/slowDown',
-            proto_dot_store__pb2.SlowDownRequest.SerializeToString,
+            proto_dot_store__pb2.SlowdownRequest.SerializeToString,
             proto_dot_store__pb2.SlowDownResponse.FromString,
             options,
             channel_credentials,
@@ -219,6 +315,168 @@ class KeyValueStore(object):
             '/distributedstore.KeyValueStore/restore',
             proto_dot_store__pb2.RestoreRequest.SerializeToString,
             proto_dot_store__pb2.RestoreResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def registerNode(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/distributedstore.KeyValueStore/registerNode',
+            proto_dot_store__pb2.NodeInfo.SerializeToString,
+            proto_dot_store__pb2.Response.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def canCommit(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/distributedstore.KeyValueStore/canCommit',
+            proto_dot_store__pb2.CanCommitRequest.SerializeToString,
+            proto_dot_store__pb2.Response.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def doCommit(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/distributedstore.KeyValueStore/doCommit',
+            proto_dot_store__pb2.DoCommitRequest.SerializeToString,
+            proto_dot_store__pb2.Response.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def propagatePut(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/distributedstore.KeyValueStore/propagatePut',
+            proto_dot_store__pb2.PropagatePutRequest.SerializeToString,
+            proto_dot_store__pb2.PropagatePutResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def requestVote(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/distributedstore.KeyValueStore/requestVote',
+            proto_dot_store__pb2.VoteRequest.SerializeToString,
+            proto_dot_store__pb2.VoteResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def commitToNode(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/distributedstore.KeyValueStore/commitToNode',
+            proto_dot_store__pb2.CommitRequest.SerializeToString,
+            proto_dot_store__pb2.CommitResponse.FromString,
             options,
             channel_credentials,
             insecure,

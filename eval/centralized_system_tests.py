@@ -14,7 +14,7 @@ import yaml
 import logging
 import random
 import concurrent.futures
-import store_pb2, store_pb2_grpc
+import proto.store_pb2 as store_pb2, proto.store_pb2_grpc as store_pb2_grpc
 from tabulate import tabulate
 
 
