@@ -28,7 +28,7 @@ message CommitResponse {
 service KeyValueStore {
   rpc put(PutRequest) returns (PutResponse);
   rpc get(GetRequest) returns (GetResponse);
-  rpc slowDown(SlowdownRequest) returns (SlowDownResponse);
+  rpc slowDown(SlowDownRequest) returns (SlowDownResponse);
   rpc restore(RestoreRequest) returns (RestoreResponse);
   rpc registerNode(NodeInfo) returns (Response);
   rpc canCommit(CanCommitRequest) returns (Response);
@@ -65,7 +65,7 @@ message GetResponse {
   bool found = 2;
 }
 
-message SlowdownRequest {
+message SlowDownRequest {
   int32 delay = 1;
 }
 
