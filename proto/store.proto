@@ -8,14 +8,6 @@ message NodeInfo {
   int32 port = 3;
 }
 
-message VoteRequest {
-  string key = 1;
-}
-
-message VoteResponse {
-  int32 vote = 1;
-}
-
 message CommitRequest {
   string key = 1;
   string value = 2;
@@ -33,9 +25,6 @@ service KeyValueStore {
   rpc registerNode(NodeInfo) returns (Response);
   rpc canCommit(CanCommitRequest) returns (Response);
   rpc doCommit(DoCommitRequest) returns (Response);
-  rpc propagatePut(PropagatePutRequest) returns (PropagatePutResponse);
-  rpc requestVote(VoteRequest) returns (VoteResponse);
-  rpc commitToNode(CommitRequest) returns (CommitResponse);
 }
 
 message PropagatePutRequest {
@@ -66,7 +55,7 @@ message GetResponse {
 }
 
 message SlowDownRequest {
-  int32 delay = 1;
+  int32 seconds = 1;
 }
 
 message SlowDownResponse {

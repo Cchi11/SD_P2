@@ -1,29 +1,41 @@
 import asyncio
-import yaml
-from master import serve as serve_master
-from slave import serve as serve_slave
+import time
+
+from centralized_node import StorageServiceServicer
+import centralized_node
 
 async def main():
-    with open('centralized_config.yaml', 'r') as file:
-        config = yaml.safe_load(file)
-    
-    # Iniciar el nodo maestro
-    master_task = asyncio.create_task(serve_master())
-    
-    await asyncio.sleep(5)  # Dar tiempo para que el maestro se inicie
-    
-    # Iniciar nodos esclavos
-    slave_config = config['slaves']
-    slave_tasks = []
-    for slave in slave_config:
-        slave_task = asyncio.create_task(
-            serve_slave(slave['ip'], slave['port'], config['master']['ip'], config['master']['port'])
-        )
-        slave_tasks.append(slave_task)
-    
-    # Esperar a que todos los nodos terminen
-    await master_task
-    await asyncio.gather(*slave_tasks)
+    # Create The master node
+    node_master = StorageServiceServicer(True, 0)
+    node_master.start_server()
+
+    # Create the slave node 1
+    node_1 = StorageServiceServicer(False, 1)
+    node_1.start_server()
+
+    # Create the slave node 2
+    node_2 = StorageServiceServicer(False, 2)
+    node_2.start_server()
+
+    # Testing stuff
+
+    # What happens if a slave node is disconnected
+    #node_1.server.stop(0)
+    #node_1.start_server()
+
+    # What happens if the master is disconnected
+    #node_master.server.stop(0)
+
+
+    # since server.start() will not block,
+    # a sleep-loop is added to keep alive
+    try:
+        while True:
+            time.sleep(86400)
+    except KeyboardInterrupt:
+        node_master.stop(0)
+        node_1.stop(0)
+        node_2.stop(0)
 
 if __name__ == '__main__':
     asyncio.run(main())
