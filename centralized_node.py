@@ -29,7 +29,8 @@ class StorageServiceServicer(store_pb2_grpc.KeyValueStoreServicer):
         node_id == node_id
         self.delay = 0
         self.store = store_service.StoreService()
-        self.nodes2PC = []
+        self.nodes2PC = list()
+        self.allNodes = list()
         self.config = self.load_config()
 
         if self.is_master:
@@ -67,6 +68,7 @@ class StorageServiceServicer(store_pb2_grpc.KeyValueStoreServicer):
         self.server.start()
 
     def node_registration(self, ip, port):
+        
         if not self.is_master:
             channel = grpc.insecure_channel(f'{ip}:{port}')
             self.master_stub = store_pb2_grpc.KeyValueStoreStub(channel)
@@ -79,11 +81,13 @@ class StorageServiceServicer(store_pb2_grpc.KeyValueStoreServicer):
                 return False
         else:
             self.nodes2PC.append(CentralizedNode(self.node_id, self.ip, self.port))
+            self.allNodes.append(CentralizedNode(self.node_id, self.ip, self.port))
             return True
 
     def registerNode(self, request, context):
         new_slave = CentralizedNode(request.id, request.ip, request.port)
         self.nodes2PC.append(new_slave)
+        self.allNodes.append(new_slave)
         return store_pb2.Response(success=True)
 
     def canCommit(self, request, context):
@@ -132,6 +136,22 @@ class StorageServiceServicer(store_pb2_grpc.KeyValueStoreServicer):
                 return True
             else:
                 return False
+            
+    def newMasterRequest(self, request, context):
+
+        self.node_registration(request.ip, request.port)
+        return store_pb2.Response(success=True)
+            
+    def imNewMaster(self):
+        self.is_master = True
+        
+        for node in self.allNodes:
+            try:
+                stub = store_pb2_grpc.KeyValueStoreStub(grpc.insecure_channel(f'{node.node_ip}:{node.node_port}'))
+                response = stub.newMasterRequest(store_pb2.NodeInfo(id=self.node_id, ip=self.ip, port=self.port))
+            except Exception:
+                pass
+                
     
     def get(self, request, context):
         time.sleep(self.delay)
@@ -144,7 +164,7 @@ class StorageServiceServicer(store_pb2_grpc.KeyValueStoreServicer):
         response = store_pb2.PutResponse(success=False)
 
         if self.is_master:
-            #try:
+            try:
                 vote = self.requestVotes()
 
                 if vote:
@@ -153,6 +173,31 @@ class StorageServiceServicer(store_pb2_grpc.KeyValueStoreServicer):
                     multicast_success = False
                 
                 response = store_pb2.PutResponse(success=multicast_success)
+            except grpc.RpcError:
+                
+                for node in self.nodes2PC:
+                    try:
+                        stub = store_pb2_grpc.KeyValueStoreStub(grpc.insecure_channel(f'{node.node_ip}:{node.node_port}'))
+                        ping = stub.ping(store_pb2.PingRequest())
+                    except Exception:
+                        self.nodes2PC.remove(node)
+                
+                response = store_pb2.PutResponse(success=False)
+        else:
+
+            try: 
+                ping = self.master_stub.ping(store_pb2.PingRequest())
+            except Exception:
+
+                self.imNewMaster()
+
+                vote = self.requestVotes()
+                if vote:
+                    multicast_success = self.multicastCommit(request.key, request.value)
+                else:
+                    multicast_success = False
+
+                response = store_pb2.PutResponse(success=multicast_success)
             
 
         return response
@@ -160,11 +205,13 @@ class StorageServiceServicer(store_pb2_grpc.KeyValueStoreServicer):
     def slowDown(self, request, context):
         time.sleep(self.delay)
         self.delay = int(request.seconds)
+        print(f"Delay set to {self.delay} seconds")
         return store_pb2.SlowDownResponse(success=True)
     
     def restore(self, request, context):
         time.sleep(self.delay)
-        self_delay = 0
+        self.delay = 0
+        print(f"Delay set to {self.delay} seconds")
         return store_pb2.RestoreResponse(success=True)
         
 

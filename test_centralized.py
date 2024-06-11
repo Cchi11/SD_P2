@@ -12,7 +12,7 @@ import store_pb2_grpc
 
 def run():
     # Conectar al servidor gRPC
-    channel = grpc.insecure_channel('localhost:50051')
+    channel = grpc.insecure_channel('127.0.0.2:32771')
     stub = store_pb2_grpc.KeyValueStoreStub(channel)
 
     # Probar el método .put
@@ -27,7 +27,7 @@ def run():
 
     # Probar el método .slowDown
     print("Probando .slowDown")
-    slow_down_response = stub.slowDown(store_pb2.SlowDownRequest(delay=2))
+    slow_down_response = stub.slowDown(store_pb2.SlowDownRequest(seconds=2))
     print(f"SlowDown response: {slow_down_response.success}")
 
     # Esperar unos segundos para observar el efecto de slowDown
@@ -51,3 +51,4 @@ def run():
 
 if __name__ == '__main__':
     run()
+

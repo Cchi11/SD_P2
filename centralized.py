@@ -17,18 +17,6 @@ async def main():
     node_2 = StorageServiceServicer(False, 2)
     node_2.start_server()
 
-    # Testing stuff
-
-    # What happens if a slave node is disconnected
-    #node_1.server.stop(0)
-    #node_1.start_server()
-
-    # What happens if the master is disconnected
-    #node_master.server.stop(0)
-
-
-    # since server.start() will not block,
-    # a sleep-loop is added to keep alive
     try:
         while True:
             time.sleep(86400)
