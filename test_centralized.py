@@ -12,7 +12,7 @@ import store_pb2_grpc
 
 def run():
     # Conectar al servidor gRPC
-    channel = grpc.insecure_channel('127.0.0.2:32771')
+    channel = grpc.insecure_channel('127.0.0.1:32770')
     stub = store_pb2_grpc.KeyValueStoreStub(channel)
 
     # Probar el método .put
