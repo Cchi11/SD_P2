@@ -25,21 +25,12 @@ service KeyValueStore {
   rpc registerNode(NodeInfo) returns (Response);
   rpc canCommit(CanCommitRequest) returns (Response);
   rpc doCommit(DoCommitRequest) returns (Response);
-  rpc ping(Empty) returns (Response)
-}
-
-message PropagatePutRequest {
-  string key = 1;
-  string value = 2;
-}
-
-message PropagatePutResponse {
-  bool success = 1;
+  rpc ping(Empty) returns (Response);
 }
 
 message PutRequest {
   string key = 1;
-  optional string value = 2;
+  string value = 2;
 }
 
 message PutResponse {

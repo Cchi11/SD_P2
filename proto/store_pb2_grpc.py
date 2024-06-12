@@ -74,6 +74,11 @@ class KeyValueStoreStub(object):
                 request_serializer=proto_dot_store__pb2.DoCommitRequest.SerializeToString,
                 response_deserializer=proto_dot_store__pb2.Response.FromString,
                 _registered_method=True)
+        self.ping = channel.unary_unary(
+                '/distributedstore.KeyValueStore/ping',
+                request_serializer=proto_dot_store__pb2.Empty.SerializeToString,
+                response_deserializer=proto_dot_store__pb2.Response.FromString,
+                _registered_method=True)
 
 
 class KeyValueStoreServicer(object):
@@ -121,6 +126,12 @@ class KeyValueStoreServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ping(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_KeyValueStoreServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -157,6 +168,11 @@ def add_KeyValueStoreServicer_to_server(servicer, server):
             'doCommit': grpc.unary_unary_rpc_method_handler(
                     servicer.doCommit,
                     request_deserializer=proto_dot_store__pb2.DoCommitRequest.FromString,
+                    response_serializer=proto_dot_store__pb2.Response.SerializeToString,
+            ),
+            'ping': grpc.unary_unary_rpc_method_handler(
+                    servicer.ping,
+                    request_deserializer=proto_dot_store__pb2.Empty.FromString,
                     response_serializer=proto_dot_store__pb2.Response.SerializeToString,
             ),
     }
@@ -347,6 +363,33 @@ class KeyValueStore(object):
             target,
             '/distributedstore.KeyValueStore/doCommit',
             proto_dot_store__pb2.DoCommitRequest.SerializeToString,
+            proto_dot_store__pb2.Response.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ping(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/distributedstore.KeyValueStore/ping',
+            proto_dot_store__pb2.Empty.SerializeToString,
             proto_dot_store__pb2.Response.FromString,
             options,
             channel_credentials,

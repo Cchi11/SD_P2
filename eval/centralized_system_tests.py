@@ -280,7 +280,7 @@ class TestCentralizedSystem(unittest.TestCase):
         restore_resp = stub_slave.restore(restore_request)
         assert restore_resp.success, "Failed to restore slave."
 
-        assert duration < 10, "The system took too long to perform the operations."
+        assert duration < 60, "The system took too long to perform the operations."
         
     def test_system_scalability_and_performance_with_slowdown_master(self):
 

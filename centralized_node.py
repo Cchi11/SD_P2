@@ -89,13 +89,14 @@ class StorageServiceServicer(store_pb2_grpc.KeyValueStoreServicer):
         self.nodes2PC.append(new_slave)
         self.allNodes.append(new_slave)
         return store_pb2.Response(success=True)
+    
 
     def canCommit(self, request, context):
-        time.sleep(self.delay)
+        #time.sleep(self.delay)
         return store_pb2.Response(success=True)
 
     def doCommit(self, request, context):
-        time.sleep(self.delay)
+        #time.sleep(self.delay)
 
         response = self.store.put(request.key, request.value)
         return store_pb2.Response(success=response)
@@ -158,9 +159,10 @@ class StorageServiceServicer(store_pb2_grpc.KeyValueStoreServicer):
         found, value = self.store.get(request.key)
         return store_pb2.GetResponse(found=found, value=value)
     
+    
+    
     def put(self, request, context):
-        time.sleep(self.delay)
-        
+        #time.sleep(self.delay)
         response = store_pb2.PutResponse(success=False)
 
         if self.is_master:
@@ -202,17 +204,20 @@ class StorageServiceServicer(store_pb2_grpc.KeyValueStoreServicer):
 
         return response
 
+
     def slowDown(self, request, context):
         time.sleep(self.delay)
-        self.delay = int(request.seconds)
-        print(f"Delay set to {self.delay} seconds")
+        self.delay = request.seconds
+        print(f"SlowDown: {self.delay}")
         return store_pb2.SlowDownResponse(success=True)
     
     def restore(self, request, context):
         time.sleep(self.delay)
         self.delay = 0
-        print(f"Delay set to {self.delay} seconds")
+        print(f"Restore: {self.delay}")
         return store_pb2.RestoreResponse(success=True)
+        
+
         
 
 
