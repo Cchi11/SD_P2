@@ -15,7 +15,7 @@ import store_pb2_grpc
 import store_service
 
 
-class CentralizedNode:
+class Node:
     def __init__(self, node_id, node_ip, node_port):
         self.node_id = node_id
         self.node_ip = node_ip
@@ -80,12 +80,12 @@ class StorageServiceServicer(store_pb2_grpc.KeyValueStoreServicer):
                 print(f'Node {self.node_id} registration failed')
                 return False
         else:
-            self.nodes2PC.append(CentralizedNode(self.node_id, self.ip, self.port))
-            self.allNodes.append(CentralizedNode(self.node_id, self.ip, self.port))
+            self.nodes2PC.append(Node(self.node_id, self.ip, self.port))
+            self.allNodes.append(Node(self.node_id, self.ip, self.port))
             return True
 
     def registerNode(self, request, context):
-        new_slave = CentralizedNode(request.id, request.ip, request.port)
+        new_slave = Node(request.id, request.ip, request.port)
         self.nodes2PC.append(new_slave)
         self.allNodes.append(new_slave)
         return store_pb2.Response(success=True)

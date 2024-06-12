@@ -79,13 +79,19 @@ class KeyValueStoreStub(object):
                 request_serializer=proto_dot_store__pb2.Empty.SerializeToString,
                 response_deserializer=proto_dot_store__pb2.Response.FromString,
                 _registered_method=True)
+        self.quorumRequest = channel.unary_unary(
+                '/distributedstore.KeyValueStore/quorumRequest',
+                request_serializer=proto_dot_store__pb2.QuorumRequest.SerializeToString,
+                response_deserializer=proto_dot_store__pb2.QuorumResponse.FromString,
+                _registered_method=True)
 
 
 class KeyValueStoreServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def put(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """common
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -109,7 +115,8 @@ class KeyValueStoreServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def registerNode(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """centralized
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -128,6 +135,13 @@ class KeyValueStoreServicer(object):
 
     def ping(self, request, context):
         """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def quorumRequest(self, request, context):
+        """decentralized
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -174,6 +188,11 @@ def add_KeyValueStoreServicer_to_server(servicer, server):
                     servicer.ping,
                     request_deserializer=proto_dot_store__pb2.Empty.FromString,
                     response_serializer=proto_dot_store__pb2.Response.SerializeToString,
+            ),
+            'quorumRequest': grpc.unary_unary_rpc_method_handler(
+                    servicer.quorumRequest,
+                    request_deserializer=proto_dot_store__pb2.QuorumRequest.FromString,
+                    response_serializer=proto_dot_store__pb2.QuorumResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -391,6 +410,33 @@ class KeyValueStore(object):
             '/distributedstore.KeyValueStore/ping',
             proto_dot_store__pb2.Empty.SerializeToString,
             proto_dot_store__pb2.Response.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def quorumRequest(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/distributedstore.KeyValueStore/quorumRequest',
+            proto_dot_store__pb2.QuorumRequest.SerializeToString,
+            proto_dot_store__pb2.QuorumResponse.FromString,
             options,
             channel_credentials,
             insecure,

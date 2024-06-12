@@ -18,14 +18,21 @@ message CommitResponse {
 }
 
 service KeyValueStore {
+
+  //common
   rpc put(PutRequest) returns (PutResponse);
   rpc get(GetRequest) returns (GetResponse);
   rpc slowDown(SlowDownRequest) returns (SlowDownResponse);
   rpc restore(RestoreRequest) returns (RestoreResponse);
+
+  //centralized
   rpc registerNode(NodeInfo) returns (Response);
   rpc canCommit(CanCommitRequest) returns (Response);
   rpc doCommit(DoCommitRequest) returns (Response);
   rpc ping(Empty) returns (Response);
+
+  //decentralized
+  rpc quorumRequest(QuorumRequest) returns (QuorumResponse);
 }
 
 message PutRequest {
@@ -73,4 +80,16 @@ message DoCommitRequest {
 
 message Response {
   bool success = 1;
+}
+
+message QuorumRequest {
+  string operation = 1;
+}
+
+message QuorumResponse {
+  int32 weight = 1;
+  bool success = 2;
+  int32 id = 3;
+  string ip = 4;
+  int32 port = 5;
 }

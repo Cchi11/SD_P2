@@ -101,3 +101,23 @@ class Response(_message.Message):
     SUCCESS_FIELD_NUMBER: _ClassVar[int]
     success: bool
     def __init__(self, success: bool = ...) -> None: ...
+
+class QuorumRequest(_message.Message):
+    __slots__ = ("operation",)
+    OPERATION_FIELD_NUMBER: _ClassVar[int]
+    operation: str
+    def __init__(self, operation: _Optional[str] = ...) -> None: ...
+
+class QuorumResponse(_message.Message):
+    __slots__ = ("weight", "success", "id", "ip", "port")
+    WEIGHT_FIELD_NUMBER: _ClassVar[int]
+    SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    IP_FIELD_NUMBER: _ClassVar[int]
+    PORT_FIELD_NUMBER: _ClassVar[int]
+    weight: int
+    success: bool
+    id: int
+    ip: str
+    port: int
+    def __init__(self, weight: _Optional[int] = ..., success: bool = ..., id: _Optional[int] = ..., ip: _Optional[str] = ..., port: _Optional[int] = ...) -> None: ...
