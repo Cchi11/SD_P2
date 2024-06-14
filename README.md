@@ -83,3 +83,12 @@ Centralized (centralized.py): This system features a master node that coordinate
 Decentralized (decentralized.py): This system does not have a master node. Instead, all nodes coordinate using consensus algorithms to achieve fault tolerance and data consistency. Each node can handle client requests, and quorum-based methods are used to ensure data integrity and replication.
 
 The project demonstrates the principles of distributed storage systems, including fault tolerance, scalability, and data consistency, by implementing simplified versions of centralized and decentralized architectures.
+
+## Run
+
+To run the distributed system, follow these steps:
+
+1. Execute the `centralized.py` or `decentralized.py` file, which act as servers, and leave them running in the background.
+2. Use another Python file to create a client that interacts with the server.
+
+These steps will ensure the distributed system operates correctly, whether in centralized or decentralized mode.
