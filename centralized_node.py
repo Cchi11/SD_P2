@@ -162,7 +162,6 @@ class StorageServiceServicer(store_pb2_grpc.KeyValueStoreServicer):
     
     
     def put(self, request, context):
-        #time.sleep(self.delay)
         response = store_pb2.PutResponse(success=False)
 
         if self.is_master:

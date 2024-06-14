@@ -6,8 +6,8 @@ import decentralized_node
 
 async def main():
     # Create The master node
-    node_master = DecentralizedStorageServiceServicer(0)
-    node_master.start_server()
+    node_0 = DecentralizedStorageServiceServicer(0)
+    node_0.start_server()
 
     # Create the slave node 1
     node_1 = DecentralizedStorageServiceServicer(1)
@@ -21,7 +21,7 @@ async def main():
         while True:
             time.sleep(86400)
     except KeyboardInterrupt:
-        node_master.stop(0)
+        node_0.stop(0)
         node_1.stop(0)
         node_2.stop(0)
 
