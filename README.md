@@ -74,4 +74,12 @@ Project/
 
 Each component of the project is organized into its respective directory, facilitating clear separation of concerns and ease of navigation. The `eval` directory specifically houses test scripts for evaluating the functionality and correctness of the implemented systems.
 
-> **Note:** Students are required to define the necessary stubs for implementing the Two Phase Commit (2PC) protocol and for node registration in the system. These stubs must be manually added to the store.proto file by the students as part of their implementation.
+## Brief description
+
+This project involves the creation of distributed key-value storage systems using Python and gRPC. There are two types of implementations:
+
+Centralized (centralized.py): This system features a master node that coordinates the entire system and several slave nodes that store data. The master node manages data replication and fault tolerance. It uses a two-phase commit (2PC) protocol to ensure consistency between the slave nodes.
+
+Decentralized (decentralized.py): This system does not have a master node. Instead, all nodes coordinate using consensus algorithms to achieve fault tolerance and data consistency. Each node can handle client requests, and quorum-based methods are used to ensure data integrity and replication.
+
+The project demonstrates the principles of distributed storage systems, including fault tolerance, scalability, and data consistency, by implementing simplified versions of centralized and decentralized architectures.
