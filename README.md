@@ -6,7 +6,7 @@ Project/
 ├── proto/
 │   ├── store.proto
 │   ├── store_pb2.py
-│   └── store_pb2_grpc.py
+│   ├── store_pb2_grpc.py
 │
 ├── centralized_config.yaml
 ├── decentralized_config.yaml
@@ -14,9 +14,20 @@ Project/
 ├── decentralized.py
 ├── eval/
 │   ├── test_centralized_system.py
-│   └── test_decentralized_system.py
+│   ├── test_decentralized_system.py
 │
-└── ...
+├── binary_dict.pickle
+├── requirements.txt
+├── store_service.py
+├── test_centralized.py
+├── README.md
+├── .vscode/
+│   └── settings.json
+└── __pycache__/
+    ├── store_pb2_grpc.cpython-312.pyc
+    ├── store_pb2.cpython-312.pyc
+    ├── centralized_node.cpython-312.pyc
+    └── decentralized_node.cpython-312.pyc
 ```
 
 ## Directory Structure Explanation
